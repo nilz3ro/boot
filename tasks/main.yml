@@ -1,0 +1,35 @@
+---
+##
+# Boot is the most important role in this
+# pattern.
+#
+# This describes the project directory structure and
+# throws errors when files are not present where expected.
+#
+- name: Loading DNA
+  include_vars:
+    file: "../../../dna/{{ item }}"
+  with_items:
+    - "{{ playbook }}.yml"
+
+- debug:
+    msg: "{{ playbook }}"
+    verbosity: 3
+
+- name: Loading playbook variables
+  include_vars:
+    file: "../../vars_files/playbooks/{{ item }}"
+  with_items:
+    - "{{ playbook }}.yml"
+    - "{{ playbook }}_private.yml"
+
+- name: Loading DNA variables
+  include_vars:
+    file: "../../vars_files/{{ item }}"
+  with_items:
+    - "prefs/{{whoami}}.yml"
+    - "private/{{provisioner}}.yml"
+    - "provisioner/{{provisioner}}/{{distribution}}.yml"
+    - "provisioner/{{provisioner}}.yml"
+    - "private/{{distribution}}.yml"
+    - "distribution/{{distribution}}.yml"
