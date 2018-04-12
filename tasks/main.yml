@@ -28,7 +28,7 @@
     file: "../../vars_files/{{ item }}"
   with_items:
     - "prefs/{{whoami}}.yml"
-  ignore: yes
+  when: load_prefs
 
 - name: Load DNA variables
   include_vars:
